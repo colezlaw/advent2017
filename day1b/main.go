@@ -8,12 +8,11 @@ import (
 
 func findSum(input []byte) int {
 	sum := 0
-	for i := 0; i < len(input); i++ {
-		next := (i + len(input)/2) % len(input)
-		if input[i]-0x30 < 0 || input[i]-0x30 > 9 || input[next]-0x30 < 0 || input[next]-0x30 > 9 {
+	for i, j := 0, len(input)/2; i < len(input); i, j = i+1, (j+1)%len(input) {
+		if input[i]-0x30 < 0 || input[i]-0x30 > 9 || input[j]-0x30 < 0 || input[j]-0x30 > 9 {
 			continue
 		}
-		if input[i] == input[next] {
+		if input[i] == input[j] {
 			sum += int(input[i] - 0x30)
 		}
 	}
