@@ -6,6 +6,8 @@ import (
 	"log"
 )
 
+// For each digit in the list and its mate halfway around the circular list,
+// if the two digits match, accumulate the digit in a sum
 func findSum(input []byte) int {
 	sum := 0
 	for i, j := 0, len(input)/2; i < len(input); i, j = i+1, (j+1)%len(input) {
