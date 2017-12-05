@@ -15,12 +15,19 @@ func TestOne(t *testing.T) {
 		{[]int{0, 3, 0, 1, -3}, 0, 0, nil},
 		{[]int{1, 3, 0, 1, -3}, 0, 1, nil},
 		{[]int{2, 3, 0, 1, -3}, 1, 4, nil},
-		{[]int{2, 4, 0, 1, -3}, 4, 1, nil},
-		{[]int{2, 4, 0, 1, -2}, 1, 0, EOP},
+		{[]int{2, 2, 0, 1, -3}, 4, 1, nil},
+		{[]int{2, 2, 0, 1, -2}, 1, 3, nil},
+		{[]int{2, 3, 0, 1, -2}, 3, 4, nil},
+		{[]int{2, 3, 0, 2, -2}, 4, 2, nil},
+		{[]int{2, 3, 0, 2, -1}, 2, 2, nil},
+		{[]int{2, 3, 1, 2, -1}, 2, 3, nil},
+		{[]int{2, 3, 3, 2, -1}, 3, 0, EOP},
 	}
 
 	for x, tc := range tt {
 		t.Run(fmt.Sprintf("Instruction %d", x), func(t *testing.T) {
+			oldp := make([]int, len(tc.program))
+			copy(oldp, tc.program)
 			pc, err := step(tc.program, tc.pc)
 			if err != nil {
 				if err == tc.err {
@@ -42,7 +49,7 @@ func TestProgram(t *testing.T) {
 		program  []int
 		expected int
 	}{
-		{[]int{0, 3, 0, 1, -3}, 5},
+		{[]int{0, 3, 0, 1, -3}, 10},
 	}
 
 	for x, tc := range tt {

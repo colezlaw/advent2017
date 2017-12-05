@@ -21,14 +21,20 @@ func step(program []int, pc int) (int, error) {
 
 	// We know the current pc is in range, so follow its instruction
 	newPC := pc + program[pc]
+	fmt.Printf("new PC is %d\n", newPC)
 
 	// Check to see if newPC is still within the program
 	if newPC < 0 || newPC >= len(program) {
+		fmt.Println("Returning EOP")
 		return newPC, EOP
 	}
 
 	// Increment the previous instruction and return
-	program[pc]++
+	if program[pc] >= 3 {
+		program[pc]--
+	} else {
+		program[pc]++
+	}
 
 	return newPC, nil
 }
@@ -38,7 +44,6 @@ func count(program []int) int {
 	var pc int
 	var err error
 	for {
-		fmt.Printf("PC is %d\n", pc)
 		pc, err = step(program, pc)
 		count++
 		if err == EOP {
